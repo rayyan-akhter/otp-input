@@ -30,24 +30,20 @@ export const Otp = () => {
   const handlePaste = (e) => {
     e.preventDefault();
     const pasteData = e.clipboardData.getData("text");
-    if (pasteData.length === otp.length) {
-      const updatedOtp = pasteData.split("");
-      setOtp(updatedOtp);
-      updatedOtp.forEach((value, index) => {
-        if (inputRefs[index]) {
-          inputRefs[index].current.value = value;
-        }
-      });
-    }
+    const firstSixCharacters = pasteData.slice(0, 6);
+    const updatedOtp = firstSixCharacters.split("");
+    setOtp(updatedOtp);
+    updatedOtp.forEach((value, index) => {
+      if (inputRefs[index]) {
+        inputRefs[index].current.value = value;
+      }
+    });
   };
 
   return (
     <div className="main">
-      
-        <h2>
-        Enter Your Otp
-        </h2>
-        
+      <h2>Enter Your Otp</h2>
+
       <div className="inputFieldContainer" onPaste={handlePaste}>
         {otp.map((data, index) => (
           <input
