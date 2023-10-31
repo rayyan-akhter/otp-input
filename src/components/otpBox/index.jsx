@@ -1,6 +1,9 @@
 import React, { useState, useRef } from "react";
 import "./style.css";
 
+function isNumeric(value) {
+  return !isNaN(value);
+}
 export const Otp = () => {
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const inputRefs = [
@@ -12,11 +15,25 @@ export const Otp = () => {
     useRef(),
   ];
 
+
+  
+
   const handleInputChange = (e, index) => {
+   
     const value = e.target.value;
+
+    if (value === " ") {
+      e.target.value = ""; 
+      return;
+    }
+     if (!isNumeric(value)) {
+    
+      return;
+    }
     const updatedOtp = [...otp];
     updatedOtp[index] = value;
     setOtp(updatedOtp);
+
 
     if (value === "") {
       if (index > 0) {
@@ -38,8 +55,9 @@ export const Otp = () => {
         inputRefs[index].current.value = value;
       }
     });
+    inputRefs[inputRefs.length - 1].current.focus();
   };
-
+  
   return (
     <div className="main">
       <h2>Enter Your Otp</h2>
@@ -61,3 +79,4 @@ export const Otp = () => {
     </div>
   );
 };
+
